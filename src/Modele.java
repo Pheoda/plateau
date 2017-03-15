@@ -27,7 +27,7 @@ public class Modele extends Observable {
         notifyObservers();
     }
 
-    public void rotateLeft(Piece piece) {
+    public void rotateRight(Piece piece) {
         boolean[][] rotated = new boolean[piece.getShape().length][piece.getShape()[0].length];
 
         for (int i = 0; i < piece.getShape()[0].length; ++i) {
@@ -41,7 +41,7 @@ public class Modele extends Observable {
         setChanged();
         notifyObservers();
     }
-    public void rotateRight(Piece piece) {
+    public void rotateLeft(Piece piece) {
         boolean[][] rotated = new boolean[piece.getShape().length][piece.getShape()[0].length];
 
         for (int i = 0; i < piece.getShape()[0].length; ++i) {

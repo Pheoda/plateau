@@ -45,21 +45,19 @@ public class Vue extends Application {
         p.get(1).getPosition().setX(5);
 
 
-        border.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke){
-                if(ke.getCode() == KeyCode.UP)
-                    m.translateUp(p.get(0));
-                if(ke.getCode() == KeyCode.DOWN)
-                    m.translateDown(p.get(0));
-                if(ke.getCode() == KeyCode.LEFT)
-                    m.translateLeft(p.get(0));
-                if(ke.getCode() == KeyCode.RIGHT)
-                    m.translateRight(p.get(0));
-                if(ke.getCode() == KeyCode.R)
-                    m.rotateRight(p.get(0));
-                if(ke.getCode() == KeyCode.A)
-                    m.rotateLeft(p.get(0));
-            }
+        border.setOnKeyPressed((KeyEvent ke) -> {
+            if(ke.getCode() == KeyCode.UP)
+                m.translateUp(p.get(0));
+            if(ke.getCode() == KeyCode.DOWN)
+                m.translateDown(p.get(0));
+            if(ke.getCode() == KeyCode.LEFT)
+                m.translateLeft(p.get(0));
+            if(ke.getCode() == KeyCode.RIGHT)
+                m.translateRight(p.get(0));
+            if(ke.getCode() == KeyCode.R)
+                m.rotateRight(p.get(0));
+            if(ke.getCode() == KeyCode.A)
+                m.rotateLeft(p.get(0));
         });
 
         // Ajout Observer
