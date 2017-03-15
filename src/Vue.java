@@ -18,7 +18,11 @@ public class Vue extends Application {
     public static final int CELL_SIZE = 40;
 
     Modele m;
-    Grille grid;
+    /*Grille grid;
+
+    public Vue(Grille grid) {
+        this.grid = grid;
+    }*/
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,12 +30,12 @@ public class Vue extends Application {
         Modele m = new Modele();
 
         BorderPane border = new BorderPane();
-        GridPane grid = new GridPane();
+        GridPane gridP = new GridPane();
 
 
 
         //border.setRight(...);
-        border.setCenter(grid);
+        border.setCenter(gridP);
 
         ArrayList<Piece> p = new ArrayList<>();
 
@@ -73,7 +77,7 @@ public class Vue extends Application {
                         r.setHeight(CELL_SIZE);
                         r.setStroke(Color.BLACK);
                         r.setFill(Color.WHITE);
-                        grid.add(r, i, j); // Ajout à la gridpane
+                        gridP.add(r, i, j); // Ajout à la gridpane
                     }
                 }
                 for(int k = 0; k < p.size(); k++)
@@ -88,23 +92,14 @@ public class Vue extends Application {
                                 piece.setWidth(CELL_SIZE);
                                 piece.setHeight(CELL_SIZE);
                                 piece.setFill(p.get(k).getColor());
-                                grid.add(piece, p.get(k).getPosition().getX() + i, p.get(k).getPosition().getY() + j);
+                                gridP.add(piece, p.get(k).getPosition().getX() + i, p.get(k).getPosition().getY() + j);
                             }
                         }
             }
         });
 
-        // Gestion evenements clavier
-        /*border.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-            }
-
-        });*/
-
         primaryStage.setTitle("Jeu de plateau");
+        //primaryStage.setTitle(grid.getTitle());
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();

@@ -28,7 +28,15 @@ public class Modele extends Observable {
     }
 
     public void rotateLeft(Piece piece) {
+        boolean[][] rotated = new boolean[piece.getShape().length][piece.getShape()[0].length];
 
+        for (int i = 0; i < piece.getShape()[0].length; ++i) {
+            for (int j = 0; j < piece.getShape().length; ++j) {
+                rotated[i][j] = piece.getShape()[j][piece.getShape()[0].length - i - 1];
+            }
+        }
+
+        piece.setShape(rotated);
 
         setChanged();
         notifyObservers();
