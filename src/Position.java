@@ -1,6 +1,3 @@
-/**
- * Created by p1609137 on 28/02/2017.
- */
 public class Position {
     private int x;
     private int y;
