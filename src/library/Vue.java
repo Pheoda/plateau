@@ -61,6 +61,7 @@ public class Vue extends Application {
                 m.rotateLeft(p.get(0));
         });
 
+        m.refreshPlateau(p);
         // Ajout Observer
         m.addObserver(new Observer() {
 
