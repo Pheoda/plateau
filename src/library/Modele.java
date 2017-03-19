@@ -13,9 +13,15 @@ public class Modele extends Observable {
     }
 
     public void translateLeft(Piece piece) {
-        piece.getPosition().setX(piece.getPosition().getX() - 1);
-        setChanged();
-        notifyObservers();
+        if (translate(piece)[0]) {
+            piece.getPosition().setX(piece.getPosition().getX() - 1);
+            setChanged();
+            notifyObservers();
+        }
+        else {
+            
+        }
+        
     }
 
     public void translateRight(Piece piece) {
@@ -65,6 +71,31 @@ public class Modele extends Observable {
         notifyObservers();
     }
 
+    private boolean [] translate(Piece p) {
+        boolean [] tValidate = {true, true, true, true};
+        
+        //vérification d'une translation possible à gauche
+        int xInPlateau = p.getPosition().getX() - 1;
+        int yInPlateau = p.getPosition().getY();
+        
+        for (int i = 0 ; i < p.getShape().length; i++) {
+            
+            System.out.println(plateau.getGrille()[xInPlateau + yInPlateau * plateau.getWidth()]);
+            
+            if (plateau.getGrille()[xInPlateau + yInPlateau * plateau.getWidth()]) {
+                int xPiece = 0;
+                int yPiece = yInPlateau - p.getPosition().getY();
+                System.out.println(xPiece);
+                System.out.println(yPiece);
+                if (p.getShape()[xPiece][yPiece]) {
+                    tValidate[0] = false;
+                }
+            }
+            yInPlateau++;
+        }
+        return tValidate;
+    }
+    
     void refreshPlateau(ArrayList<Piece> p) {
         
         for (Piece currentP : p) {
@@ -79,6 +110,17 @@ public class Modele extends Observable {
                 }
             }  
         }
+        
+        //test
+        
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(plateau.getGrille()[i + j *10] + " ");
+            }
+            System.out.println("|");
+        }
+        System.out.println();
+        System.out.println();
     }
     
 }

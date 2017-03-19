@@ -61,7 +61,7 @@ public class Vue extends Application {
                 m.rotateLeft(p.get(0));
         });
 
-        m.refreshPlateau(p);
+        
         // Ajout Observer
         m.addObserver(new Observer() {
 
@@ -80,6 +80,9 @@ public class Vue extends Application {
                         gridP.add(r, i, j); // Ajout à la gridpane
                     }
                 }
+                
+                m.refreshPlateau(p);
+                
                 for(int k = 0; k < p.size(); k++)
                     for(int i = 0; i < p.get(k).getShape().length; i++)
                         for(int j = 0; j < p.get(k).getShape()[0].length; j++)
