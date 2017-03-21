@@ -18,16 +18,14 @@ public class Modele extends Observable {
             setChanged();
             notifyObservers();
         }
-        else {
-            
-        }
-        
     }
 
     public void translateRight(Piece piece) {
-        piece.getPosition().setX(piece.getPosition().getX() + 1);
-        setChanged();
-        notifyObservers();
+        if (translate(piece)[1]) {  
+            piece.getPosition().setX(piece.getPosition().getX() + 1);
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public void translateUp(Piece piece) {
@@ -75,21 +73,55 @@ public class Modele extends Observable {
         boolean [] tValidate = {true, true, true, true};
         
         //vérification d'une translation possible à gauche
-        int xInPlateau = p.getPosition().getX() - 1;
-        int yInPlateau = p.getPosition().getY();
+        //Parcours de la matrice de la pièce pour trouver la partie de la pièce la plus à gauche
+        int i = 0;
+        int j = 0;
+        while(i < p.getShape().length && !p.getShape()[j][i]) {
+            j = 0;
+            while(j < p.getShape()[0].length - 1 && !p.getShape()[j][i]) {
+                j++;
+            }
+            i++;
+        }
+        i--;
+        j--;
         
-        for (int i = 0 ; i < p.getShape().length; i++) {
-            
-            System.out.println(plateau.getGrille()[xInPlateau + yInPlateau * plateau.getWidth()]);
+        int xInPlateau = p.getPosition().getX() + i ;
+        int yInPlateau = p.getPosition().getY() + j; 
+        
+        for (int k = 1 ; k < p.getShape()[0].length; k++) {
+            System.out.println(xInPlateau);
+            System.out.println(yInPlateau);
             
             if (plateau.getGrille()[xInPlateau + yInPlateau * plateau.getWidth()]) {
-                int xPiece = 0;
-                int yPiece = yInPlateau - p.getPosition().getY();
-                System.out.println(xPiece);
-                System.out.println(yPiece);
-                if (p.getShape()[xPiece][yPiece]) {
-                    tValidate[0] = false;
-                }
+                tValidate[0] = false;
+            }
+            yInPlateau++;
+        }
+        
+        
+        //Vérification translation droite
+        i = p.getShape().length - 1;
+        j = 0;
+        while(i <= 0 && !p.getShape()[j][i]) {
+            j = 0;
+            while(j < p.getShape()[0].length - 1 && !p.getShape()[j][i]) {
+                j++;
+            }
+            i++;
+        }
+        i--;
+        j--;
+        
+        xInPlateau = p.getPosition().getX() + i ;
+        yInPlateau = p.getPosition().getY() + j; 
+        
+        for (int k = 1 ; k < p.getShape()[0].length; k++) {
+            System.out.println(xInPlateau);
+            System.out.println(yInPlateau);
+            
+            if (plateau.getGrille()[xInPlateau + yInPlateau * plateau.getWidth()]) {
+                tValidate[1] = false;
             }
             yInPlateau++;
         }

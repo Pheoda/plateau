@@ -8,13 +8,11 @@ public class Piece {
     private Color color;
     private Position position;
     private boolean[][] shape;
-    private Collider collider;
 
     public Piece(Color color, Position position, boolean[][] shape) {
         this.color = color;
         this.shape = shape;
         this.position = position;
-        collider = new Collider();
     }
 
     public boolean isEmpty() {
