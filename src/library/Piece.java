@@ -3,8 +3,6 @@ package library;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 
-
-
 public class Piece {
     private Color color;
     private Position position;

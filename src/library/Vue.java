@@ -76,8 +76,6 @@ public class Vue extends Application {
                     }
                 }
                 
-                m.refreshPlateau(p);
-                
                 for(int k = 0; k < p.size(); k++)
                     for(int i = 0; i < p.get(k).getShape().length; i++)
                         for(int j = 0; j < p.get(k).getShape()[0].length; j++)
@@ -97,7 +95,6 @@ public class Vue extends Application {
         });
 
         primaryStage.setTitle("Jeu de plateau");
-        //primaryStage.setTitle(grid.getTitle());
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();
