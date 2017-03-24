@@ -5,33 +5,42 @@ import java.util.Observable;
 
 public class Modele extends Observable {
 
+    int gridW;
+    int gridH;
+
+    public Modele(int gridW, int gridH) {
+        this.gridW = gridW;
+        this.gridH = gridH;
+    }
+
     public void translateLeft(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() - 1, piece.getPosition().getY()));
-        
+
         movePiece(piece, pieceNew, pieces);
     }
 
     public void translateRight(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() + 1, piece.getPosition().getY()));
-        
+
         movePiece(piece, pieceNew, pieces);
     }
 
     public void translateUp(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() - 1));
-        
+
         movePiece(piece, pieceNew, pieces);
     }
 
     public void translateDown(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() + 1));
-        
+
         movePiece(piece, pieceNew, pieces);
     }
+
     /*
     public void rotateRight(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
@@ -62,14 +71,29 @@ public class Modele extends Observable {
         setChanged();
         notifyObservers();
     }*/
-    
+
+    // The piece is in the grid ?
+    private boolean isInGrid(Piece piece) {
+        int x, y;
+        for (Cellule cell : piece.getShape()) {
+            x = piece.getPosition().getX() + cell.getPosition().getX();
+            y = piece.getPosition().getY() + cell.getPosition().getY();
+            if (x < 0 || x >= this.gridW || y < 0 || y >= this.gridH) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Move the piece only if no collision is detected
     private void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {
-        if (!checkCollision(piece, pieceNew, pieces)) {
-            piece.setPosition(pieceNew.getPosition());
-            pieceNew = null;
-            setChanged();
-            notifyObservers();
+        if (isInGrid(pieceNew)) {
+            if (!checkCollision(piece, pieceNew, pieces)) {
+                piece.setPosition(pieceNew.getPosition());
+                pieceNew = null;
+                setChanged();
+                notifyObservers();
+            }
         }
     }
 

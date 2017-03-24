@@ -18,13 +18,15 @@ import javafx.stage.Stage;
 public class Vue extends Application {
 
     public static final int CELL_SIZE = 40;
+    public static final int GRID_WIDTH = 10;
+    public static final int GRID_HEIGHT = 10;
 
     Modele m;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Modele m = new Modele();
+        Modele m = new Modele(GRID_WIDTH, GRID_HEIGHT);
 
         BorderPane border = new BorderPane();
         GridPane gridP = new GridPane();
@@ -35,9 +37,11 @@ public class Vue extends Application {
         ArrayList<Piece> p = new ArrayList<>();
 
         PieceFactory factory = new PieceFactory();
-        p.add(factory.create('I', Color.CYAN));
+        p.add(factory.create('S', Color.CYAN));
         p.add(factory.create('O', Color.YELLOW));
-        p.get(1).getPosition().setX(5);
+        p.add(factory.create('J', Color.RED));
+        p.get(1).setPosition(new Position(5, 0));
+        p.get(2).setPosition(new Position(2, 6));
 
         border.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.UP) {
@@ -69,8 +73,8 @@ public class Vue extends Application {
                 gridP.getChildren().clear();
 
                 // Création de la grille vide 
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 10; j++) {
+                for (int i = 0; i < GRID_WIDTH; i++) {
+                    for (int j = 0; j < GRID_HEIGHT; j++) {
                         Rectangle r = new Rectangle();
                         r.setX(i * CELL_SIZE);
                         r.setY(j * CELL_SIZE);
