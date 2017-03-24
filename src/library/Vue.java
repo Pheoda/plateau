@@ -62,7 +62,9 @@ public class Vue extends Application {
 
             @Override
             public void update(Observable o, Object arg) {
-                // Création de la grille
+				gridP.clear();
+				
+                // Création de la grille vide 
                 for(int i = 0; i < 10; i++) {
                     for (int j = 0; j < 10; j++) {
                         Rectangle r = new Rectangle();
