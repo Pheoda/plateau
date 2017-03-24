@@ -5,6 +5,8 @@
         <group>
             <file>file:/U:/PROJET/plateau/src/library/Modele.java</file>
             <file>file:/U:/PROJET/plateau/src/library/Vue.java</file>
+            <file>file:/U:/PROJET/plateau/src/library/PieceFactory.java</file>
+            <file>file:/U:/PROJET/plateau/src/library/Piece.java</file>
         </group>
     </open-files>
 </project-private>

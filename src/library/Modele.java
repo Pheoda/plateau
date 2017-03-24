@@ -32,7 +32,7 @@ public class Modele extends Observable {
         
         movePiece(piece, pieceNew, pieces);
     }
-
+    /*
     public void rotateRight(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
 
@@ -61,7 +61,7 @@ public class Modele extends Observable {
 
         setChanged();
         notifyObservers();
-    }
+    }*/
     
     // Move the piece only if no collision is detected
     private void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {

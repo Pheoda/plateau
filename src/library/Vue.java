@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Vue extends Application {
+
     public static final int CELL_SIZE = 40;
 
     Modele m;
@@ -28,8 +29,6 @@ public class Vue extends Application {
         BorderPane border = new BorderPane();
         GridPane gridP = new GridPane();
 
-
-
         //border.setRight(...);
         border.setCenter(gridP);
 
@@ -40,32 +39,37 @@ public class Vue extends Application {
         p.add(factory.create('O', Color.YELLOW));
         p.get(1).getPosition().setX(5);
 
-
         border.setOnKeyPressed((KeyEvent ke) -> {
-            if(ke.getCode() == KeyCode.UP)
-                m.translateUp(p.get(0));
-            if(ke.getCode() == KeyCode.DOWN)
-                m.translateDown(p.get(0));
-            if(ke.getCode() == KeyCode.LEFT)
-                m.translateLeft(p.get(0));
-            if(ke.getCode() == KeyCode.RIGHT)
-                m.translateRight(p.get(0));
-            if(ke.getCode() == KeyCode.R)
-                m.rotateRight(p.get(0));
-            if(ke.getCode() == KeyCode.A)
-                m.rotateLeft(p.get(0));
+            if (ke.getCode() == KeyCode.UP) {
+                m.translateUp(p.get(0), p);
+            }
+            if (ke.getCode() == KeyCode.DOWN) {
+                m.translateDown(p.get(0), p);
+            }
+            if (ke.getCode() == KeyCode.LEFT) {
+                m.translateLeft(p.get(0), p);
+            }
+            if (ke.getCode() == KeyCode.RIGHT) {
+                m.translateRight(p.get(0), p);
+            }
+            /*if (ke.getCode() == KeyCode.R) {
+                m.rotateRight(p.get(0), p);
+            }
+            if (ke.getCode() == KeyCode.A) {
+                m.rotateLeft(p.get(0), p);
+            }*/
         });
 
-        
         // Ajout Observer
         m.addObserver(new Observer() {
 
             @Override
             public void update(Observable o, Object arg) {
-				gridP.clear();
-				
+                // Clear gridpane
+                gridP.getChildren().clear();
+
                 // Création de la grille vide 
-                for(int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 10; j++) {
                         Rectangle r = new Rectangle();
                         r.setX(i * CELL_SIZE);
@@ -77,22 +81,18 @@ public class Vue extends Application {
                         gridP.add(r, i, j); // Ajout à la gridpane
                     }
                 }
-                
-                for(int k = 0; k < p.size(); k++)
-                    for(int i = 0; i < p.get(k).getShape().length; i++)
-                        for(int j = 0; j < p.get(k).getShape()[0].length; j++)
-                        {
-                            if (p.get(k).getShape()[i][j])
-                            {
-                                Rectangle piece = new Rectangle();
-                                piece.setX(p.get(k).getPosition().getX());
-                                piece.setY(p.get(k).getPosition().getY());
-                                piece.setWidth(CELL_SIZE);
-                                piece.setHeight(CELL_SIZE);
-                                piece.setFill(p.get(k).getColor());
-                                gridP.add(piece, p.get(k).getPosition().getX() + i, p.get(k).getPosition().getY() + j);
-                            }
-                        }
+
+                for (Piece piece : p) {
+                    for (Cellule cell : piece.getShape()) {
+                        Rectangle rect = new Rectangle();
+                        rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                        rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                        rect.setWidth(CELL_SIZE);
+                        rect.setHeight(CELL_SIZE);
+                        rect.setFill(piece.getColor());
+                        gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                    }
+                }
             }
         });
 
