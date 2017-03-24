@@ -5,59 +5,32 @@ import java.util.Observable;
 
 public class Modele extends Observable {
 
-    Grille plateau;
-
-    public Modele() {
-        plateau = Grille.getInstance(null, 10, 10);
-    }
-
     public void translateLeft(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() - 1, piece.getPosition().getY()));
         
-        if (!checkCollision(piece, pieceNew, pieces)) {
-            piece.setPosition(pieceNew.getPosition());
-            pieceNew = null;
-            setChanged();
-            notifyObservers();
-        }
+        movePiece(piece, pieceNew, pieces);
     }
 
     public void translateRight(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() + 1, piece.getPosition().getY()));
         
-        if (!checkCollision(piece, pieceNew, pieces)) {
-            piece.setPosition(pieceNew.getPosition());
-            pieceNew = null;
-            setChanged();
-            notifyObservers();
-        }
+        movePiece(piece, pieceNew, pieces);
     }
 
     public void translateUp(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() - 1));
         
-        if (!checkCollision(piece, pieceNew, pieces)) {
-            piece.setPosition(pieceNew.getPosition());
-            pieceNew = null;
-            setChanged();
-            notifyObservers();
-        }
-
+        movePiece(piece, pieceNew, pieces);
     }
 
     public void translateDown(Piece piece, ArrayList<Piece> pieces) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() + 1));
         
-        if (!checkCollision(piece, pieceNew, pieces)) {
-            piece.setPosition(pieceNew.getPosition());
-            pieceNew = null;
-            setChanged();
-            notifyObservers();
-        }
+        movePiece(piece, pieceNew, pieces);
     }
 
     public void rotateRight(Piece piece, ArrayList<Piece> pieces) {
@@ -88,6 +61,16 @@ public class Modele extends Observable {
 
         setChanged();
         notifyObservers();
+    }
+    
+    // Move the piece only if no collision is detected
+    private void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {
+        if (!checkCollision(piece, pieceNew, pieces)) {
+            piece.setPosition(pieceNew.getPosition());
+            pieceNew = null;
+            setChanged();
+            notifyObservers();
+        }
     }
 
     private boolean checkCollision(Piece pieceOld, Piece pieceNew, ArrayList<Piece> pieces) {
