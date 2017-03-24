@@ -1,29 +1,31 @@
 package library;
 
+import java.util.ArrayList;
 import javafx.scene.paint.Color;
 
 public class PieceFactory {
 
 
-    public Piece create(char shape, Color color) {
-        boolean[][] tabCell;
+    public Piece create(char shape, Color color, int taille) {
+        ArrayList<Cellule> tabCell = new ArrayList<Cellule>();
 
         switch (shape) {
             /*case 'Z':
                 newPiece = new Piece(color, );
                 break;*/
             case 'O':
-                tabCell = new boolean[2][2];
-                tabCell[0][0] = true;
-                tabCell[0][1] = true;
-                tabCell[1][0] = true;
-                tabCell[1][1] = true;
+                for (int i = 0; i < 1; i++) {
+                    for (int j = 0; j < 1; j++) {
+                        tabCell.add(new Cellule(new Position(i, j)));
+                    }   
+                }    
                 break;
             case 'I':
-                tabCell = new boolean[4][4];
-                for(int i = 0; i < tabCell.length; i++)
-                    for(int j = 0; j < tabCell[0].length; j++)
-                        tabCell[i][j] = i == 1; // Remplit la 2e colonne uniquement
+                for(int i = 0; i < taille; i++)
+                    for(int j = 0; j < taille; j++)
+                        if (i == 1) {
+                            tabCell.add(new Cellule(new Position(i, j)));
+                        }
                 break;
             /*case 'S':
                 newPiece = new Piece();
@@ -41,7 +43,7 @@ public class PieceFactory {
                 tabCell = null;
         }
 
-        return new Piece(color, new Position(0, 0), tabCell);
+        return new Piece(color, new Position(0, 0), tabCell, taille);
     }
 
 }

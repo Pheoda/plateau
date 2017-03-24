@@ -1,21 +1,20 @@
+/***************/
+/* SERT À RIEN */
+/***************/
 package library;
 
 public class Grille {
     private String title;
     private int height;
     private int width;
-    private boolean [] grille;
+    private Cellule [][] grille;
     private static Grille instance;
 
     private Grille(String t, int h, int w) {
         title = t;
         height = h;
         width = w;
-        grille = new boolean[width*height];
-        for (int i = 0; i < this.grille.length; i++) {
-            grille[i] = Boolean.FALSE;
-        }
-        
+        grille = new Cellule[height][width];
     }
     
     public static Grille getInstance(String t, int h, int w) {
@@ -37,14 +36,9 @@ public class Grille {
         return width;
     }
 
-    public boolean[] getGrille() {
+    public Cellule[][] getGrille() {
         return grille;
     }
 
-    public void setGrille(Position p, boolean bool) {
-        this.grille[p.getX() + p.getY() * this.width] = bool;
-    }
-    
-    
     
 }
