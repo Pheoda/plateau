@@ -19,11 +19,6 @@ public class Vue extends Application {
     public static final int CELL_SIZE = 40;
 
     Modele m;
-    /*Grille grid;
-
-    public Vue(Grille grid) {
-        this.grid = grid;
-    }*/
 
     @Override
     public void start(Stage primaryStage) throws Exception {
