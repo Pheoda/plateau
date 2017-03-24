@@ -18,6 +18,13 @@ public class Piece {
         this.taille = taille;
     }
 
+    Piece(Piece piece) {
+        this.color = piece.color;
+        this.shape = piece.shape;
+        this.position = piece.position;
+        this.taille = piece.taille;
+    }
+
     public boolean isEmpty() {
 
         return false;
@@ -29,6 +36,10 @@ public class Piece {
 
     public Position getPosition() {
         return position;
+    }
+    
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public ArrayList<Cellule> getShape() {
