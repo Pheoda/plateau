@@ -5,12 +5,16 @@ import java.util.Observable;
 
 public class Modele extends Observable {
 
-    int gridW;
-    int gridH;
+    protected int gridW;
+    protected int gridH;
+    protected ArrayList<Piece> pieces;
+
 
     public Modele(int gridW, int gridH) {
         this.gridW = gridW;
         this.gridH = gridH;
+        pieces = new ArrayList<>();
+
     }
 
     public void translateLeft(Piece piece, ArrayList<Piece> pieces) {
@@ -83,7 +87,7 @@ public class Modele extends Observable {
     }
 
     // Move the piece only if no collision is detected
-    private void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {
+    protected void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {
         if (isInGrid(pieceNew)) {
             if (!checkCollision(piece, pieceNew, pieces)) {
                 piece.setShape(pieceNew.getShape());        // Rotation
@@ -95,7 +99,7 @@ public class Modele extends Observable {
         }
     }
 
-    private boolean checkCollision(Piece pieceOld, Piece pieceNew, ArrayList<Piece> pieces) {
+    protected boolean checkCollision(Piece pieceOld, Piece pieceNew, ArrayList<Piece> pieces) {
 
         for (Piece piece : pieces) {
             if (piece != pieceOld) {
@@ -112,5 +116,18 @@ public class Modele extends Observable {
         }
         return false;
     }
+    
+    public void addPiece(char shape) {
+        PieceFactory pFacto = new PieceFactory();
+        Piece piece = pFacto.create(shape);
+        pieces.add(piece);
+    }
 
+     public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
+    public void setPieces(ArrayList<Piece> pieces) {
+        this.pieces = pieces;
+    }
 }

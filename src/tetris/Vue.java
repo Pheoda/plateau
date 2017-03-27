@@ -59,23 +59,12 @@ public class Vue extends Application {
             }
         }
 
-        ArrayList<Piece> p = new ArrayList<>();
+        m.pieceAlea();
 
-        p.add(m.pieceAlea());
-
-        for (Piece piece : p) {
-            for (Cellule cell : piece.getShape()) {
-                Rectangle rect = new Rectangle();
-                rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
-                rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
-                rect.setWidth(CELL_SIZE);
-                rect.setHeight(CELL_SIZE);
-                rect.setFill(piece.getColor());
-                gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
-            }
-        }
         
         border.setOnKeyPressed((KeyEvent ke) -> {
+            ArrayList<Piece> p = m.getPieces();
+            
             if (ke.getCode() == KeyCode.UP) {
                 m.translateUp(p.get(p.size() - 1), p);
             }
@@ -94,9 +83,7 @@ public class Vue extends Application {
             if (ke.getCode() == KeyCode.A) {
                 m.rotateLeft(p.get(p.size() - 1), p);
             }
-            if (ke.getCode() == KeyCode.N) {                
-                p.add(m.pieceAlea());
-            }
+            
         });
 
         // Ajout Observer
@@ -106,6 +93,7 @@ public class Vue extends Application {
             public void update(Observable o, Object arg) {
                 // Clear gridpane
                 gridP.getChildren().clear();
+                ArrayList<Piece> p = m.getPieces();
                 
                 // Création de la grille vide 
                 for (int i = 0; i < GRID_WIDTH; i++) {
