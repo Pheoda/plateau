@@ -58,20 +58,20 @@ public class Vue extends Application {
         Text textNext = new Text();
         textNext.setFont(new Font(20));
         textNext.setText("Piece suivante :");
-        Text textHold = new Text();
-        textHold.setFont(new Font(20));
-        textHold.setText("Piece en cours");
+        Text textScore = new Text();
+        textScore.setFont(new Font(20));
+        textScore.setText("Score : " + score);
 
         
         border.setRight(gridP_colRight);
-        border.setLeft(textHold);
+        border.setLeft(textScore);
         border.setCenter(gridP);
         
         gridP_colRight.add(textNext, 0,0);
         
         // Ajout de marges
-        border.setMargin(gridP, new Insets(TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN, LEFT_MARGIN));
-        border.setMargin(textHold, new Insets(0, 0, 0, LEFT_MARGIN));
+        BorderPane.setMargin(gridP, new Insets(TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN, LEFT_MARGIN));
+        BorderPane.setMargin(textScore, new Insets(0, 0, 0, LEFT_MARGIN));
         
         // Création de la grille center vide 
         for (int i = 0; i < GRID_WIDTH; i++) {
@@ -161,8 +161,7 @@ public class Vue extends Application {
                 }
                 
                 // Affichage de la piece suivante à droite
-                
-                
+
                 for (Cellule cellCurrent : pieceNext.getShape()) {
                     Rectangle rectPieceCurrent = new Rectangle();
                     rectPieceCurrent.setWidth(CELL_SIZE);

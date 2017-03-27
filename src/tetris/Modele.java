@@ -44,7 +44,7 @@ public class Modele extends library.Modele {
 
         // on place la piece en haut et au centre de la grille
         pieceAlea.setPosition(null);
-        pieces.add(pieceAlea);
+        this.pieces.add(pieceAlea);
     }
 
     @Override
@@ -71,15 +71,17 @@ public class Modele extends library.Modele {
         return false;
     }
 
+    public void initializePositionPieceCurrent() {
+        int indice = pieces.size() - 2;
 
-    void initializePositionPieceCurrent() {
-        if (pieces.get(pieces.size() - 2).getPosition() == null) {
-            pieces.get(pieces.size() - 2).setPosition(new Position(3, 0));
-                    
+        // On initialise au milieu de la grille
+        if (pieces.size() >= 2) {
+            if (pieces.get(indice).getPosition() == null) {
+                pieces.get(indice).setPosition(new Position((gridW - pieces.get(indice).getTaille()) / 2, 0));
+            }
         }
     }
 
-    
     // Check et detruis les lines completes, et appelle fallPieces pour la gravite
     private boolean checkCompleteLines(ArrayList<Piece> pieces) {
         boolean[][] grid = new boolean[gridW][gridH];
