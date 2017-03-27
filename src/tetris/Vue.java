@@ -23,9 +23,8 @@ import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-
 public class Vue extends Application {
-    
+
     public static final int CELL_SIZE = 30;
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 20;
@@ -33,19 +32,20 @@ public class Vue extends Application {
     public static final int COL_WIDTH = 7;
     public static final int COL_HEIGHT = 21;
     
+
     public static final int TOP_MARGIN = 15;
     public static final int BOTTOM_MARGIN = 15;
     public static final int LEFT_MARGIN = 50;
     public static final int RIGHT_MARGIN = 50;
 
     library.Modele m;
-    
+
     private int score;
 
     public void start(Stage primaryStage) throws Exception {
 
         Modele m = new Modele(GRID_WIDTH, GRID_HEIGHT);
-        
+
         score = 0;
 
         BorderPane border = new BorderPane();
@@ -86,16 +86,13 @@ public class Vue extends Application {
                 gridP.add(r, i, j); // Ajout à la gridpane
             }
         }
-        
-        
+
         m.pieceAlea();
         m.pieceAlea();
 
-        
         border.setOnKeyPressed((KeyEvent ke) -> {
             ArrayList<Piece> p = m.getPieces();
-            
-            
+
             if (ke.getCode() == KeyCode.DOWN) {
                 m.initializePositionPieceCurrent();
                 m.translateDown(p.get(p.size() - 2), p);
@@ -116,7 +113,7 @@ public class Vue extends Application {
                 m.initializePositionPieceCurrent();
                 m.rotateLeft(p.get(p.size() - 2), p);
             }
-            
+
         });
 
         // Ajout Observer
@@ -131,10 +128,10 @@ public class Vue extends Application {
                 gridP_colRight.add(textNext, 0,0);
                 
                 ArrayList<Piece> p = m.getPieces();
+
                 //Sauvegarde de la piece suivante
                 Piece pieceNext = p.remove(p.size() - 1);
-     
-                
+
                 // Création de la grille vide 
                 for (int i = 0; i < GRID_WIDTH; i++) {
                     for (int j = 0; j < GRID_HEIGHT; j++) {
@@ -150,15 +147,17 @@ public class Vue extends Application {
                 }
               
                  for (Piece piece : p) {
-                    for (Cellule cell : piece.getShape()) {
-                        Rectangle rect = new Rectangle();
-                        rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
-                        rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
-                        rect.setWidth(CELL_SIZE);
-                        rect.setHeight(CELL_SIZE);
-                        rect.setFill(piece.getColor());
-                        gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
-                    }
+                     if (piece.getPosition() != null) {
+                        for (Cellule cell : piece.getShape()) {
+                            Rectangle rect = new Rectangle();
+                            rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                            rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                            rect.setWidth(CELL_SIZE);
+                            rect.setHeight(CELL_SIZE);
+                            rect.setFill(piece.getColor());
+                            gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                        }
+                     }
                 }
                 
                 // Affichage de la piece suivante à droite
@@ -182,11 +181,11 @@ public class Vue extends Application {
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();
-    
+
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

@@ -34,7 +34,6 @@ public class Vue extends Application {
         //border.setRight(...);
         border.setCenter(gridP);
 
-
         m.addPiece('S');
         m.addPiece('O');
         m.addPiece('J');
@@ -105,9 +104,8 @@ public class Vue extends Application {
         primaryStage.show();
         border.requestFocus();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
-
 }
