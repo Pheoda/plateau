@@ -63,26 +63,38 @@ public class Vue extends Application {
 
         p.add(m.pieceAlea());
 
+        for (Piece piece : p) {
+            for (Cellule cell : piece.getShape()) {
+                Rectangle rect = new Rectangle();
+                rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                rect.setWidth(CELL_SIZE);
+                rect.setHeight(CELL_SIZE);
+                rect.setFill(piece.getColor());
+                gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+            }
+        }
+        
         border.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.UP) {
-                m.translateUp(p.get(0), p);
+                m.translateUp(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.DOWN) {
-                m.translateDown(p.get(0), p);
+                m.translateDown(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.LEFT) {
-                m.translateLeft(p.get(0), p);
+                m.translateLeft(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.RIGHT) {
-                m.translateRight(p.get(0), p);
+                m.translateRight(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.R) {
-                m.rotateRight(p.get(0), p);
+                m.rotateRight(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.A) {
-                m.rotateLeft(p.get(0), p);
+                m.rotateLeft(p.get(p.size() - 1), p);
             }
-            if (ke.getCode() == KeyCode.N) {
+            if (ke.getCode() == KeyCode.N) {                
                 p.add(m.pieceAlea());
             }
         });
