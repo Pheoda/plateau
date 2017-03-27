@@ -31,7 +31,7 @@ public class Modele extends library.Modele {
         int2PieceLettre.put(7,'T');
         
         pieceLettre2PieceColor.put('Z',Color.DARKGREEN);
-        pieceLettre2PieceColor.put('0',Color.GOLD);
+        pieceLettre2PieceColor.put('O',Color.GOLD);
         pieceLettre2PieceColor.put('I',Color.CYAN);
         pieceLettre2PieceColor.put('S',Color.RED);
         pieceLettre2PieceColor.put('L',Color.DARKORANGE);

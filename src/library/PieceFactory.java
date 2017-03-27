@@ -27,7 +27,6 @@ public class PieceFactory {
                         tabCell.add(new Cellule(new Position(i, j)));
                     }
                 }
-                
                 break;
                 
             case 'I':
