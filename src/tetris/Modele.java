@@ -48,7 +48,7 @@ public class Modele extends library.Modele {
         
         
         // on place la piece en haut et au centre de la grille
-        pieceAlea.setPosition(new Position(3, 0));
+        pieceAlea.setPosition(null);
         pieces.add(pieceAlea);
     }
 
@@ -66,6 +66,13 @@ public class Modele extends library.Modele {
 
     private boolean reachBottom(Piece piece) { 
         return (piece.getPosition().getY() + 1 ) == this.gridH;
+    }
+
+    void initializePositionPieceCurrent() {
+        if (pieces.get(pieces.size() - 2).getPosition() == null) {
+            pieces.get(pieces.size() - 2).setPosition(new Position(3, 0));
+                    
+        }
     }
 
     

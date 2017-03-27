@@ -103,7 +103,7 @@ public class Modele extends Observable {
     protected boolean checkCollision(Piece pieceOld, Piece pieceNew, ArrayList<Piece> pieces) {
 
         for (Piece piece : pieces) {
-            if (piece != pieceOld) {
+            if (piece != pieceOld && piece.getPosition() != null) {
                 for (Cellule cellN : pieceNew.getShape()) {
                     for (Cellule cell : piece.getShape()) {
                         if (cell.getPosition().getX() + piece.getPosition().getX() == cellN.getPosition().getX() + pieceNew.getPosition().getX()) {
@@ -128,7 +128,7 @@ public class Modele extends Observable {
         return pieces;
     }
 
-    public void setPieces(ArrayList<Piece> pieces) {
-        this.pieces = pieces;
+    public void setPiece(Piece piece) {
+        this.pieces.add(piece);
     }
 }
