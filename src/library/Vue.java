@@ -105,16 +105,7 @@ public class Vue extends Application {
         primaryStage.show();
         border.requestFocus();
     }
-<<<<<<< HEAD
-
     public static void main(String[] args) {
         launch(args);
     }
-
-=======
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
->>>>>>> ccfda2aa1b046bc0430934cde5825e71ad944622
 }
