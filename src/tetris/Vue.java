@@ -21,31 +21,30 @@ import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-
 public class Vue extends Application {
-    
-    public static final int CELL_SIZE = 20;
+
+    public static final int CELL_SIZE = 30;
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 20;
-    
+
     public static final int TOP_MARGIN = 15;
     public static final int BOTTOM_MARGIN = 15;
     public static final int LEFT_MARGIN = 50;
     public static final int RIGHT_MARGIN = 50;
 
     library.Modele m;
-    
+
     private int score;
 
     public void start(Stage primaryStage) throws Exception {
 
         Modele m = new Modele(GRID_WIDTH, GRID_HEIGHT);
-        
+
         score = 0;
 
         BorderPane border = new BorderPane();
         GridPane gridP = new GridPane();
-                
+
         Text textNext = new Text();
         textNext.setFont(new Font(20));
         textNext.setText("Piece suivante");
@@ -56,12 +55,12 @@ public class Vue extends Application {
         border.setRight(textNext);
         border.setLeft(textScore);
         border.setCenter(gridP);
-        
+
         // Ajout de marges
         BorderPane.setMargin(gridP, new Insets(TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN, LEFT_MARGIN));
         BorderPane.setMargin(textNext, new Insets(0, RIGHT_MARGIN, 0, 0));
         BorderPane.setMargin(textScore, new Insets(0, 0, 0, LEFT_MARGIN));
-        
+
         // Création de la grille vide 
         for (int i = 0; i < GRID_WIDTH; i++) {
             for (int j = 0; j < GRID_HEIGHT; j++) {
@@ -75,12 +74,12 @@ public class Vue extends Application {
                 gridP.add(r, i, j); // Ajout à la gridpane
             }
         }
-        
+
         m.pieceAlea();
-    
+
         border.setOnKeyPressed((KeyEvent ke) -> {
             ArrayList<Piece> p = m.getPieces();
-            
+
             if (ke.getCode() == KeyCode.UP) {
                 m.translateUp(p.get(p.size() - 1), p);
             }
@@ -99,7 +98,7 @@ public class Vue extends Application {
             if (ke.getCode() == KeyCode.A) {
                 m.rotateLeft(p.get(p.size() - 1), p);
             }
-            
+
         });
 
         // Ajout Observer
@@ -110,7 +109,7 @@ public class Vue extends Application {
                 // Clear gridpane
                 gridP.getChildren().clear();
                 ArrayList<Piece> p = m.getPieces();
-                
+
                 // Création de la grille vide 
                 for (int i = 0; i < GRID_WIDTH; i++) {
                     for (int j = 0; j < GRID_HEIGHT; j++) {
@@ -143,11 +142,11 @@ public class Vue extends Application {
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();
-    
+
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

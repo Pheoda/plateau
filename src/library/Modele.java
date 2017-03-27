@@ -2,6 +2,7 @@ package library;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import javafx.scene.paint.Color;
 
 public class Modele extends Observable {
 
@@ -119,7 +120,7 @@ public class Modele extends Observable {
     
     public void addPiece(char shape) {
         PieceFactory pFacto = new PieceFactory();
-        Piece piece = pFacto.create(shape);
+        Piece piece = pFacto.create(shape, Color.BLUE);
         pieces.add(piece);
     }
 
