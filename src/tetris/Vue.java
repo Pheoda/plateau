@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetris;
 
 import java.util.ArrayList;
@@ -26,10 +21,7 @@ import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-/**
- *
- * @author panderium
- */
+
 public class Vue extends Application {
     
     public static final int CELL_SIZE = 20;
@@ -85,31 +77,42 @@ public class Vue extends Application {
         }
 
         ArrayList<Piece> p = new ArrayList<>();
-        PieceFactory factory = new PieceFactory();
-        p.add(factory.create('S', Color.CYAN));
-        p.add(factory.create('O', Color.YELLOW));
-        p.add(factory.create('J', Color.RED));
-        p.get(1).setPosition(new Position(5, 0));
-        p.get(2).setPosition(new Position(2, 6));
+        
+        p.add(m.pieceAlea());
 
+        for (Piece piece : p) {
+            for (Cellule cell : piece.getShape()) {
+                Rectangle rect = new Rectangle();
+                rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                rect.setWidth(CELL_SIZE);
+                rect.setHeight(CELL_SIZE);
+                rect.setFill(piece.getColor());
+                gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+            }
+        }
+        
         border.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.UP) {
-                m.translateUp(p.get(0), p);
+                m.translateUp(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.DOWN) {
-                m.translateDown(p.get(0), p);
+                m.translateDown(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.LEFT) {
-                m.translateLeft(p.get(0), p);
+                m.translateLeft(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.RIGHT) {
-                m.translateRight(p.get(0), p);
+                m.translateRight(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.R) {
-                m.rotateRight(p.get(0), p);
+                m.rotateRight(p.get(p.size() - 1), p);
             }
             if (ke.getCode() == KeyCode.A) {
-                m.rotateLeft(p.get(0), p);
+                m.rotateLeft(p.get(p.size() - 1), p);
+            }
+            if (ke.getCode() == KeyCode.N) {                
+                p.add(m.pieceAlea());
             }
         });
 
@@ -120,8 +123,8 @@ public class Vue extends Application {
             public void update(Observable o, Object arg) {
                 // Clear gridpane
                 gridP.getChildren().clear();
-
-               // Création de la grille vide 
+                
+                // Création de la grille vide 
                 for (int i = 0; i < GRID_WIDTH; i++) {
                     for (int j = 0; j < GRID_HEIGHT; j++) {
                         Rectangle r = new Rectangle();
