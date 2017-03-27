@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 
 public class PieceFactory {
 
-    public Piece create(char shape, Color color) {
+    public Piece create(char shape) {
         ArrayList<Cellule> tabCell = new ArrayList<>();
         int taille;
+        Color color;
 
         switch (shape) {
             case 'Z':
@@ -16,6 +17,7 @@ public class PieceFactory {
                 tabCell.add(new Cellule(new Position(1, 0)));
                 tabCell.add(new Cellule(new Position(1, 1)));
                 tabCell.add(new Cellule(new Position(2, 1)));
+                color = Color.DARKGREEN;
                 break;
                 
             case 'O':
@@ -25,6 +27,7 @@ public class PieceFactory {
                         tabCell.add(new Cellule(new Position(i, j)));
                     }
                 }
+                color = Color.GOLD;
                 break;
                 
             case 'I':
@@ -32,6 +35,7 @@ public class PieceFactory {
                 for (int i = 0; i < taille; i++) {
                     tabCell.add(new Cellule(new Position(i, 1)));
                 }
+                color = Color.CYAN;
                 break;
                 
             case 'S':
@@ -40,6 +44,7 @@ public class PieceFactory {
                 tabCell.add(new Cellule(new Position(2, 0)));
                 tabCell.add(new Cellule(new Position(0, 1)));
                 tabCell.add(new Cellule(new Position(1, 1)));
+                color = Color.RED;
                 break;
                 
             case 'L':
@@ -48,6 +53,7 @@ public class PieceFactory {
                     tabCell.add(new Cellule(new Position(i, 0)));
                 }
                 tabCell.add(new Cellule(new Position(0, 1)));
+                color = Color.DARKORANGE;
                 break;
                 
             case 'J':
@@ -56,6 +62,7 @@ public class PieceFactory {
                     tabCell.add(new Cellule(new Position(i, 0)));
                 }
                 tabCell.add(new Cellule(new Position(2, 1)));
+                color = Color.DEEPPINK;
                 break;
 
             case 'T':
@@ -64,11 +71,13 @@ public class PieceFactory {
                     tabCell.add(new Cellule(new Position(i, 0)));
                 }
                 tabCell.add(new Cellule(new Position(1, 1)));
+                color = Color.MEDIUMVIOLETRED;
                 break;
                 
             default:
                 taille = 0;
                 tabCell = null;
+                color = null;
         }
 
         return new Piece(color, new Position(0, 0), tabCell, taille);
