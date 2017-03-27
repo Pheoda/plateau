@@ -1,29 +1,40 @@
-package library;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tetris;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
-
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import library.Cellule;
+import library.Piece;
+import library.PieceFactory;
+import library.Position;
 
+/**
+ *
+ * @author panderium
+ */
 public class Vue extends Application {
-
+    
     public static final int CELL_SIZE = 40;
     public static final int GRID_WIDTH = 10;
-    public static final int GRID_HEIGHT = 10;
+    public static final int GRID_HEIGHT = 20;
 
-    Modele m;
+    library.Modele m;
 
-    @Override
     public void start(Stage primaryStage) throws Exception {
 
         Modele m = new Modele(GRID_WIDTH, GRID_HEIGHT);
@@ -33,15 +44,24 @@ public class Vue extends Application {
 
         //border.setRight(...);
         border.setCenter(gridP);
+        
+        // Création de la grille vide 
+        for (int i = 0; i < GRID_WIDTH; i++) {
+            for (int j = 0; j < GRID_HEIGHT; j++) {
+                Rectangle r = new Rectangle();
+                r.setX(i * CELL_SIZE);
+                r.setY(j * CELL_SIZE);
+                r.setWidth(CELL_SIZE);
+                r.setHeight(CELL_SIZE);
+                r.setStroke(Color.BLACK);
+                r.setFill(Color.WHITE);
+                gridP.add(r, i, j); // Ajout à la gridpane
+            }
+        }
 
         ArrayList<Piece> p = new ArrayList<>();
 
-        PieceFactory factory = new PieceFactory();
-        p.add(factory.create('S', Color.CYAN));
-        p.add(factory.create('O', Color.YELLOW));
-        p.add(factory.create('J', Color.RED));
-        p.get(1).setPosition(new Position(5, 0));
-        p.get(2).setPosition(new Position(2, 6));
+        p.add(pieceAlea());
 
         border.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.UP) {
@@ -72,19 +92,7 @@ public class Vue extends Application {
                 // Clear gridpane
                 gridP.getChildren().clear();
 
-                // Création de la grille vide 
-                for (int i = 0; i < GRID_WIDTH; i++) {
-                    for (int j = 0; j < GRID_HEIGHT; j++) {
-                        Rectangle r = new Rectangle();
-                        r.setX(i * CELL_SIZE);
-                        r.setY(j * CELL_SIZE);
-                        r.setWidth(CELL_SIZE);
-                        r.setHeight(CELL_SIZE);
-                        r.setStroke(Color.BLACK);
-                        r.setFill(Color.WHITE);
-                        gridP.add(r, i, j); // Ajout à la gridpane
-                    }
-                }
+               
 
                 for (Piece piece : p) {
                     for (Cellule cell : piece.getShape()) {
@@ -100,14 +108,15 @@ public class Vue extends Application {
             }
         });
 
-        primaryStage.setTitle("Jeu de plateau");
+        primaryStage.setTitle("Tetris");
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();
+    
     }
-/*
+    
     public static void main(String[] args) {
         launch(args);
     }
-*/
+    
 }
