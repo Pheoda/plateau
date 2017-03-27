@@ -56,12 +56,12 @@ public class Vue extends Application {
             if (ke.getCode() == KeyCode.RIGHT) {
                 m.translateRight(p.get(0), p);
             }
-            /*if (ke.getCode() == KeyCode.R) {
+            if (ke.getCode() == KeyCode.R) {
                 m.rotateRight(p.get(0), p);
             }
             if (ke.getCode() == KeyCode.A) {
                 m.rotateLeft(p.get(0), p);
-            }*/
+            }
         });
 
         // Ajout Observer

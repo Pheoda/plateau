@@ -16,7 +16,7 @@ public class Piece {
         this.taille = taille;
     }
 
-    Piece(Piece piece) {
+    public Piece(Piece piece) {
         this.color = piece.color;
         this.shape = piece.shape;
         this.position = piece.position;
