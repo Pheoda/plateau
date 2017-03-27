@@ -79,7 +79,6 @@ public class Vue extends Application {
         
         m.pieceAlea();
 
-
         
         border.setOnKeyPressed((KeyEvent ke) -> {
             ArrayList<Piece> p = m.getPieces();
