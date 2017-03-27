@@ -34,10 +34,12 @@ public class Vue extends Application {
         //border.setRight(...);
         border.setCenter(gridP);
 
+
         m.addPiece('S');
         m.addPiece('O');
         m.addPiece('J');
         ArrayList<Piece> p = m.getPieces();
+
         p.get(1).setPosition(new Position(5, 0));
         p.get(2).setPosition(new Position(2, 6));
 
@@ -103,9 +105,16 @@ public class Vue extends Application {
         primaryStage.show();
         border.requestFocus();
     }
+<<<<<<< HEAD
 
     public static void main(String[] args) {
         launch(args);
     }
 
+=======
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+>>>>>>> ccfda2aa1b046bc0430934cde5825e71ad944622
 }

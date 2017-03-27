@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetris;
 
 
@@ -15,10 +10,6 @@ import library.PieceFactory;
 import library.Position;
 
 
-/**
- *
- * @author panderium
- */
 public class Modele extends library.Modele {
     
     
@@ -43,6 +34,7 @@ public class Modele extends library.Modele {
         PieceFactory pFacto = new PieceFactory();
         Piece pieceAlea = pFacto.create((char) intToPieceLettre.get(i));
         //on place la piece en haut et au centre de la grille
+
         pieceAlea.setPosition(new Position(3, 0));
         pieces.add(pieceAlea);
     }

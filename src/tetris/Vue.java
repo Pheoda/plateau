@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetris;
 
 import java.util.ArrayList;
@@ -10,6 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,33 +13,54 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import library.Cellule;
 import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-/**
- *
- * @author panderium
- */
+
 public class Vue extends Application {
     
-    public static final int CELL_SIZE = 40;
+    public static final int CELL_SIZE = 20;
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 20;
+    
+    public static final int TOP_MARGIN = 15;
+    public static final int BOTTOM_MARGIN = 15;
+    public static final int LEFT_MARGIN = 50;
+    public static final int RIGHT_MARGIN = 50;
 
     library.Modele m;
+    
+    private int score;
 
     public void start(Stage primaryStage) throws Exception {
 
         Modele m = new Modele(GRID_WIDTH, GRID_HEIGHT);
+        
+        score = 0;
 
         BorderPane border = new BorderPane();
         GridPane gridP = new GridPane();
+                
+        Text textNext = new Text();
+        textNext.setFont(new Font(20));
+        textNext.setText("Piece suivante");
+        Text textHold = new Text();
+        textHold.setFont(new Font(20));
+        textHold.setText("Piece en cours");
 
-        //border.setRight(...);
+        border.setRight(textNext);
+        border.setLeft(textHold);
         border.setCenter(gridP);
+        
+        // Ajout de marges
+        border.setMargin(gridP, new Insets(TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN, LEFT_MARGIN));
+        border.setMargin(textNext, new Insets(0, RIGHT_MARGIN, 0, 0));
+        border.setMargin(textHold, new Insets(0, 0, 0, LEFT_MARGIN));
         
         // Création de la grille vide 
         for (int i = 0; i < GRID_WIDTH; i++) {
@@ -58,8 +75,10 @@ public class Vue extends Application {
                 gridP.add(r, i, j); // Ajout à la gridpane
             }
         }
-
+        
+        
         m.pieceAlea();
+
 
         
         border.setOnKeyPressed((KeyEvent ke) -> {
@@ -108,8 +127,6 @@ public class Vue extends Application {
                         gridP.add(r, i, j); // Ajout à la gridpane
                     }
                 }
-
-               
 
                 for (Piece piece : p) {
                     for (Cellule cell : piece.getShape()) {
