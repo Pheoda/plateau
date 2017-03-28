@@ -24,7 +24,6 @@ import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-
 public class Vue extends Application {
 
     public static final int CELL_SIZE = 30;
@@ -40,16 +39,15 @@ public class Vue extends Application {
     public static final int RIGHT_MARGIN = 50;
 
     private int score;
-    
+
     private Modele m;
-        
 
     public void start(Stage primaryStage) throws Exception {
 
         m = new Modele(GRID_WIDTH, GRID_HEIGHT);
 
         score = 0;
-        
+
         BorderPane border = new BorderPane();
         GridPane gridP = new GridPane();
         GridPane gridP_colRight = new GridPane();
@@ -69,8 +67,6 @@ public class Vue extends Application {
         border.setCenter(gridP);
 
         gridP_colRight.add(textNext, 0, 0);
-        
-       
 
         // Ajout de marges
         BorderPane.setMargin(gridP, new Insets(TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN, LEFT_MARGIN));
@@ -92,13 +88,14 @@ public class Vue extends Application {
 
         m.pieceAlea();
         m.pieceAlea();
+
         Thread thread = new Thread(m);
         thread.start();
 
-       /* border.setOnKeyPressed((KeyEvent ke) -> {
+        border.setOnKeyPressed((KeyEvent ke) -> {
             ArrayList<Piece> p = m.getPieces();
 
-            if (ke.getCode() == KeyCode.DOWN) {
+            if (ke.getCode() == KeyCode.SPACE) {
                 m.initializePositionPieceCurrent();
                 m.translateDown(p.get(p.size() - 2));
             }
@@ -119,65 +116,64 @@ public class Vue extends Application {
                 m.rotateLeft(p.get(p.size() - 2));
             }
 
-        });*/
-
+        });
         // Ajout Observer
         m.addObserver(new Observer() {
-           
+
             @Override
             public void update(Observable o, Object arg) {
-                
-                
-                // Clear gridpane
-                gridP.getChildren().clear();
-                gridP_colRight.getChildren().clear();
 
-                gridP_colRight.add(textNext, 0, 0);
+                Platform.runLater(() -> {
+                    // Clear gridpane
+                    gridP.getChildren().clear();
+                    gridP_colRight.getChildren().clear();
 
-                ArrayList<Piece> p = m.getPieces();
+                    gridP_colRight.add(textNext, 0, 0);
 
-                //Sauvegarde de la piece suivante
-                Piece pieceNext = p.remove(p.size() - 1);
+                    ArrayList<Piece> p = m.getPieces();
 
-                // Création de la grille vide 
-                for (int i = 0; i < GRID_WIDTH; i++) {
-                    for (int j = 0; j < GRID_HEIGHT; j++) {
-                        Rectangle r = new Rectangle();
-                        r.setX(i * CELL_SIZE);
-                        r.setY(j * CELL_SIZE);
-                        r.setWidth(CELL_SIZE);
-                        r.setHeight(CELL_SIZE);
-                        r.setStroke(Color.BLACK);
-                        r.setFill(Color.WHITE);
-                        gridP.add(r, i, j); // Ajout à la gridpane
-                    }
-                }
+                    //Sauvegarde de la piece suivante
+                    Piece pieceNext = p.remove(p.size() - 1);
 
-                for (Piece piece : p) {
-                    if (piece.getPosition() != null) {
-                        for (Cellule cell : piece.getShape()) {
-                            Rectangle rect = new Rectangle();
-                            rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
-                            rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
-                            rect.setWidth(CELL_SIZE);
-                            rect.setHeight(CELL_SIZE);
-                            rect.setFill(piece.getColor());
-                            gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                    // Création de la grille vide 
+                    for (int i = 0; i < GRID_WIDTH; i++) {
+                        for (int j = 0; j < GRID_HEIGHT; j++) {
+                            Rectangle r = new Rectangle();
+                            r.setX(i * CELL_SIZE);
+                            r.setY(j * CELL_SIZE);
+                            r.setWidth(CELL_SIZE);
+                            r.setHeight(CELL_SIZE);
+                            r.setStroke(Color.BLACK);
+                            r.setFill(Color.WHITE);
+                            gridP.add(r, i, j); // Ajout à la gridpane
                         }
                     }
-                }
 
-                // Affichage de la piece suivante à droite
-                for (Cellule cellCurrent : pieceNext.getShape()) {
-                    Rectangle rectPieceCurrent = new Rectangle();
-                    rectPieceCurrent.setWidth(CELL_SIZE);
-                    rectPieceCurrent.setHeight(CELL_SIZE);
-                    rectPieceCurrent.setFill(pieceNext.getColor());
-                    rectPieceCurrent.setStroke(Color.BLACK);
-                    gridP_colRight.add(rectPieceCurrent, 1 + cellCurrent.getPosition().getX(), 25 + cellCurrent.getPosition().getY());
-                }
-                p.add(pieceNext);
+                    for (Piece piece : p) {
+                        if (piece.getPosition() != null) {
+                            for (Cellule cell : piece.getShape()) {
+                                Rectangle rect = new Rectangle();
+                                rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                                rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                                rect.setWidth(CELL_SIZE);
+                                rect.setHeight(CELL_SIZE);
+                                rect.setFill(piece.getColor());
+                                gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                            }
+                        }
+                    }
 
+                    // Affichage de la piece suivante à droite
+                    for (Cellule cellCurrent : pieceNext.getShape()) {
+                        Rectangle rectPieceCurrent = new Rectangle();
+                        rectPieceCurrent.setWidth(CELL_SIZE);
+                        rectPieceCurrent.setHeight(CELL_SIZE);
+                        rectPieceCurrent.setFill(pieceNext.getColor());
+                        rectPieceCurrent.setStroke(Color.BLACK);
+                        gridP_colRight.add(rectPieceCurrent, 1 + cellCurrent.getPosition().getX(), 25 + cellCurrent.getPosition().getY());
+                    }
+                    p.add(pieceNext);
+                });
             }
         });
 
@@ -185,9 +181,6 @@ public class Vue extends Application {
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
         border.requestFocus();
-
-        
-        
 
     }
 
