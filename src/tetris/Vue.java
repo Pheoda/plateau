@@ -81,7 +81,6 @@ public class Vue extends Application {
                 r.setWidth(CELL_SIZE);
                 r.setHeight(CELL_SIZE);
                 r.setStroke(Color.BLACK);
-                r.setFill(Color.WHITE);
                 gridP.add(r, i, j); // Ajout à la gridpane
             }
         }
@@ -148,7 +147,6 @@ public class Vue extends Application {
                                 r.setWidth(CELL_SIZE);
                                 r.setHeight(CELL_SIZE);
                                 r.setStroke(Color.BLACK);
-                                r.setFill(Color.WHITE);
                                 gridP.add(r, i, j); // Ajout à la gridpane
                             }
                         }
@@ -161,7 +159,9 @@ public class Vue extends Application {
                                     rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
                                     rect.setWidth(CELL_SIZE);
                                     rect.setHeight(CELL_SIZE);
+                                    
                                     rect.setFill(piece.getColor());
+                                    rect.setStroke(Color.BLACK);
                                     gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
                                 }
                             }

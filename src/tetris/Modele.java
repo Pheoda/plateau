@@ -10,8 +10,15 @@ import library.PieceFactory;
 import library.Position;
 
 public class Modele extends library.Modele implements Runnable {
-
+    
+    // Score ajoute pour chaque ligne detruite
     public static final int SCORE_LINE_DESTROYED = 100;
+    
+    // Ratio score/vitesse deplacement piece
+    public static final int RATIO_TIME = 50;    
+    
+    // Valeur minimale de rafraichissement du deplacement de la piece
+    public static final int TIME_SLEEP_MIN = 70; 
 
     int score;
     boolean gameOver;
@@ -170,9 +177,13 @@ public class Modele extends library.Modele implements Runnable {
             initializePositionPieceCurrent();
             translateDown(pieces.get(pieces.size() - 2));
             try {
-                Thread.sleep(500);
+                // On augmente la vitesse en fonction du score
+                int timeSleep = 500 - score/RATIO_TIME;
+                if(timeSleep < TIME_SLEEP_MIN)
+                    timeSleep = TIME_SLEEP_MIN;
+                Thread.sleep(timeSleep);
             } catch (Exception e) {
-
+                
             }
 
         }
