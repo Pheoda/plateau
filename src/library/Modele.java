@@ -18,35 +18,35 @@ public class Modele extends Observable {
 
     }
 
-    public void translateLeft(Piece piece, ArrayList<Piece> pieces) {
+    public void translateLeft(Piece piece) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() - 1, piece.getPosition().getY()));
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
-    public void translateRight(Piece piece, ArrayList<Piece> pieces) {
+    public void translateRight(Piece piece) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX() + 1, piece.getPosition().getY()));
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
-    public void translateUp(Piece piece, ArrayList<Piece> pieces) {
+    public void translateUp(Piece piece) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() - 1));
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
-    public void translateDown(Piece piece, ArrayList<Piece> pieces) {
+    public void translateDown(Piece piece) {
         Piece pieceNew = new Piece(piece);
         pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() + 1));
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
-    public void rotateLeft(Piece piece, ArrayList<Piece> pieces) {
+    public void rotateLeft(Piece piece) {
         Piece pieceNew = new Piece(piece);
 
         // Reset de la shape de la nouvelle piece
@@ -57,10 +57,10 @@ public class Modele extends Observable {
             pieceNew.getShape().add(new Cellule(new Position(cell.getPosition().getY(), piece.getTaille() - cell.getPosition().getX() - 1)));
         }
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
-    public void rotateRight(Piece piece, ArrayList<Piece> pieces) {
+    public void rotateRight(Piece piece) {
         Piece pieceNew = new Piece(piece);
 
         // Reset de la shape de la nouvelle piece
@@ -71,7 +71,7 @@ public class Modele extends Observable {
             pieceNew.getShape().add(new Cellule(new Position(piece.getTaille() - cell.getPosition().getY() - 1, cell.getPosition().getX())));
         }
 
-        movePiece(piece, pieceNew, pieces);
+        movePiece(piece, pieceNew);
     }
 
     // The piece is in the grid ?
@@ -88,9 +88,9 @@ public class Modele extends Observable {
     }
 
     // Move the piece only if no collision is detected
-    protected void movePiece(Piece piece, Piece pieceNew, ArrayList<Piece> pieces) {
+    protected void movePiece(Piece piece, Piece pieceNew) {
         if (isInGrid(pieceNew)) {
-            if (!checkCollision(piece, pieceNew, pieces)) {
+            if (!checkCollision(piece, pieceNew)) {
                 piece.setShape(pieceNew.getShape());        // Rotation
                 piece.setPosition(pieceNew.getPosition());  // Translation
                 pieceNew = null;
@@ -100,7 +100,7 @@ public class Modele extends Observable {
         }
     }
 
-    protected boolean checkCollision(Piece pieceOld, Piece pieceNew, ArrayList<Piece> pieces) {
+    protected boolean checkCollision(Piece pieceOld, Piece pieceNew) {
 
         for (Piece piece : pieces) {
             if (piece != pieceOld && piece.getPosition() != null) {

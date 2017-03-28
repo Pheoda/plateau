@@ -44,22 +44,22 @@ public class Vue extends Application {
 
         border.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.UP) {
-                m.translateUp(p.get(0), p);
+                m.translateUp(p.get(0));
             }
             if (ke.getCode() == KeyCode.DOWN) {
-                m.translateDown(p.get(0), p);
+                m.translateDown(p.get(0));
             }
             if (ke.getCode() == KeyCode.LEFT) {
-                m.translateLeft(p.get(0), p);
+                m.translateLeft(p.get(0));
             }
             if (ke.getCode() == KeyCode.RIGHT) {
-                m.translateRight(p.get(0), p);
+                m.translateRight(p.get(0));
             }
             if (ke.getCode() == KeyCode.R) {
-                m.rotateRight(p.get(0), p);
+                m.rotateRight(p.get(0));
             }
             if (ke.getCode() == KeyCode.A) {
-                m.rotateLeft(p.get(0), p);
+                m.rotateLeft(p.get(0));
             }
         });
 

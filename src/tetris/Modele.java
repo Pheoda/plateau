@@ -9,7 +9,7 @@ import library.Piece;
 import library.PieceFactory;
 import library.Position;
 
-public class Modele extends library.Modele {
+public class Modele extends library.Modele implements Runnable {
 
     public Modele(int gridW, int gridH) {
         super(gridW, gridH);
@@ -28,11 +28,11 @@ public class Modele extends library.Modele {
         int2PieceLettre.put(7, 'T');
 
         pieceLettre2PieceColor.put('Z', Color.DARKGREEN);
-        pieceLettre2PieceColor.put('O', Color.GOLD);
+        pieceLettre2PieceColor.put('O', Color.YELLOW);
         pieceLettre2PieceColor.put('I', Color.CYAN);
         pieceLettre2PieceColor.put('S', Color.RED);
-        pieceLettre2PieceColor.put('L', Color.DARKORANGE);
-        pieceLettre2PieceColor.put('J', Color.DEEPPINK);
+        pieceLettre2PieceColor.put('L', Color.ORANGE);
+        pieceLettre2PieceColor.put('J', Color.BLUE);
         pieceLettre2PieceColor.put('T', Color.MEDIUMVIOLETRED);
 
         Random rand = new Random();
@@ -48,17 +48,20 @@ public class Modele extends library.Modele {
     }
 
     @Override
-    public void translateDown(Piece piece, ArrayList<Piece> pieces) {
+    public void translateDown(Piece piece) {
         Piece pieceNew = new Piece(piece);
-        pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() + 1));
-        if (checkCollision(piece, pieceNew, pieces) || reachBottom(pieceNew)) {
-            checkCompleteLines(pieces);
-            pieceAlea();
+        if (piece.getPosition() != null) {
+            pieceNew.setPosition(new Position(piece.getPosition().getX(), piece.getPosition().getY() + 1));
+            if (checkCollision(piece, pieceNew) || reachBottom(pieceNew)) {
+                checkCompleteLines();
+                pieceAlea();
 
-            setChanged();
-            notifyObservers();
-        } else {
-            movePiece(piece, pieceNew, pieces);
+                setChanged();
+                notifyObservers();
+                System.out.println("Ca devrait faire un truc");
+            } else {
+                movePiece(piece, pieceNew);
+            }
         }
     }
 
@@ -83,7 +86,7 @@ public class Modele extends library.Modele {
     }
 
     // Check et detruis les lines completes, et appelle fallPieces pour la gravite
-    private boolean checkCompleteLines(ArrayList<Piece> pieces) {
+    private boolean checkCompleteLines() {
         boolean[][] grid = new boolean[gridW][gridH];
 
         // Construction d'un tableau de bool pour faciliter
@@ -109,9 +112,9 @@ public class Modele extends library.Modele {
             if (x == gridW) // On a une ligne pleine 
             {
                 System.out.println("Destroying line " + y);
-                destroyLine(pieces, y);
+                destroyLine(y);
                 // On execute la fonction tant qu'on enleve une ligne
-                checkCompleteLines(pieces);
+                checkCompleteLines();
                 return true;
             }
         }
@@ -119,7 +122,7 @@ public class Modele extends library.Modele {
     }
 
     // Detruis la ligne demandee
-    private void destroyLine(ArrayList<Piece> pieces, int line) {
+    private void destroyLine(int line) {
 
         // Methode pour supprimer les cellules selon une condition precise
         // (on ne peut pas supprimer en iterant -> solution alternative)
@@ -128,17 +131,38 @@ public class Modele extends library.Modele {
                 p.getShape().removeIf(c -> p.getPosition().getY() + c.getPosition().getY() == line);
             }
         }
-        fallPieces(pieces, line);
+        fallPieces(line);
     }
 
     // Fait tomber toutes les cellules au dessus de la ligne line
-    private void fallPieces(ArrayList<Piece> pieces, int line) {
+    private void fallPieces(int line) {
         for (Piece p : pieces) {
             for (Cellule c : p.getShape()) {
                 if (p.getPosition() != null && p.getPosition().getY() + c.getPosition().getY() < line) {
                     c.getPosition().setY(c.getPosition().getY() + 1);
                 }
             }
+        }
+    }
+
+    private void checkEnd() {
+
+    }
+
+    @Override
+    public void run() {
+
+        while (true) {
+            initializePositionPieceCurrent();
+            translateDown(pieces.get(pieces.size() - 2));
+            try {
+
+                System.out.println("Sleep");
+                Thread.sleep(500);
+            } catch (Exception e) {
+
+            }
+
         }
     }
 }
