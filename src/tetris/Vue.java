@@ -6,10 +6,8 @@ import java.util.Observer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -21,8 +19,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import library.Cellule;
 import library.Piece;
-import library.PieceFactory;
-import library.Position;
 
 public class Vue extends Application {
 
@@ -180,7 +176,7 @@ public class Vue extends Application {
 
                         //Affichage score
                         textScore.setText("Score : " + m.getScore());
-                    } else // Fin de partie !  
+                    } else // Fin de partie !
                     {
                         border.setLeft(null);
                         border.setRight(null);

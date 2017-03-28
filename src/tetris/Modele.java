@@ -1,6 +1,5 @@
 package tetris;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import javafx.scene.paint.Color;
@@ -10,15 +9,15 @@ import library.PieceFactory;
 import library.Position;
 
 public class Modele extends library.Modele implements Runnable {
-    
+
     // Score ajoute pour chaque ligne detruite
     public static final int SCORE_LINE_DESTROYED = 100;
-    
+
     // Ratio score/vitesse deplacement piece
-    public static final int RATIO_TIME = 50;    
-    
+    public static final int RATIO_TIME = 50;
+
     // Valeur minimale de rafraichissement du deplacement de la piece
-    public static final int TIME_SLEEP_MIN = 70; 
+    public static final int TIME_SLEEP_MIN = 70;
 
     int score;
     boolean gameOver;
@@ -41,13 +40,13 @@ public class Modele extends library.Modele implements Runnable {
         int2PieceLettre.put(6, 'J');
         int2PieceLettre.put(7, 'T');
 
-        pieceLettre2PieceColor.put('Z', Color.DARKGREEN);
+        pieceLettre2PieceColor.put('Z', Color.GREEN);
         pieceLettre2PieceColor.put('O', Color.YELLOW);
         pieceLettre2PieceColor.put('I', Color.CYAN);
         pieceLettre2PieceColor.put('S', Color.RED);
         pieceLettre2PieceColor.put('L', Color.ORANGE);
         pieceLettre2PieceColor.put('J', Color.BLUE);
-        pieceLettre2PieceColor.put('T', Color.MEDIUMVIOLETRED);
+        pieceLettre2PieceColor.put('T', Color.PURPLE);
 
         Random rand = new Random();
         int i = 1 + rand.nextInt(8 - 1);
@@ -94,6 +93,7 @@ public class Modele extends library.Modele implements Runnable {
         if (pieces.size() >= 2) {
             if (pieces.get(indice).getPosition() == null) {
                 pieces.get(indice).setPosition(new Position((gridW - pieces.get(indice).getTaille()) / 2, 0));
+
             }
         }
     }
@@ -160,7 +160,7 @@ public class Modele extends library.Modele implements Runnable {
 
     private boolean checkEnd() {
         // On check si la derniere piece posee est situee tout en haut
-        if(pieces.size() > 2) {
+        if (pieces.size() > 2) {
             return pieces.get(pieces.size() - 3).getPosition().getY() == 0;
         }
         return false;
@@ -178,22 +178,25 @@ public class Modele extends library.Modele implements Runnable {
             translateDown(pieces.get(pieces.size() - 2));
             try {
                 // On augmente la vitesse en fonction du score
-                int timeSleep = 500 - score/RATIO_TIME;
-                if(timeSleep < TIME_SLEEP_MIN)
+                int timeSleep = 500 - score / RATIO_TIME;
+                if (timeSleep < TIME_SLEEP_MIN) {
                     timeSleep = TIME_SLEEP_MIN;
+                }
                 Thread.sleep(timeSleep);
             } catch (Exception e) {
-                
+
             }
 
         }
         gameOver();
     }
+
     private void gameOver() {
         this.gameOver = true;
         setChanged();
         notifyObservers();
     }
+
     public boolean getGameOver() {
         return this.gameOver;
     }
