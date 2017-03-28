@@ -53,7 +53,7 @@ public class Vue extends Application {
 
         Text textNext = new Text();
         textNext.setFont(new Font(20));
-        textNext.setText("Piece suivante :");
+        textNext.setText("Pièce suivante :");
         Text textScore = new Text();
         textScore.setFont(new Font(20));
         textScore.setText("Score : " + score);
@@ -182,7 +182,7 @@ public class Vue extends Application {
                         border.setRight(null);
                         textScore.setFont(new Font(40));
                         border.setCenter(textScore);
-                        textScore.setText("Score : " + m.getScore());
+                        textScore.setText("Game Over !\nScore : " + m.getScore());
                     }
                 }
                 );
