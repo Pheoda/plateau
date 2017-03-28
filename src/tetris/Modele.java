@@ -11,8 +11,15 @@ import library.Position;
 
 public class Modele extends library.Modele implements Runnable {
 
+    public static final int SCORE_LINE_DESTROYED = 100;
+
+    int score;
+    boolean gameOver;
+
     public Modele(int gridW, int gridH) {
         super(gridW, gridH);
+        score = 0;
+        gameOver = false;
     }
 
     public void pieceAlea() {
@@ -58,7 +65,6 @@ public class Modele extends library.Modele implements Runnable {
 
                 setChanged();
                 notifyObservers();
-                System.out.println("Ca devrait faire un truc");
             } else {
                 movePiece(piece, pieceNew);
             }
@@ -111,8 +117,8 @@ public class Modele extends library.Modele implements Runnable {
             }
             if (x == gridW) // On a une ligne pleine 
             {
-                System.out.println("Destroying line " + y);
                 destroyLine(y);
+                score += SCORE_LINE_DESTROYED;
                 // On execute la fonction tant qu'on enleve une ligne
                 checkCompleteLines();
                 return true;
@@ -145,24 +151,39 @@ public class Modele extends library.Modele implements Runnable {
         }
     }
 
-    private void checkEnd() {
+    private boolean checkEnd() {
+        // On check si la derniere piece posee est situee tout en haut
+        if(pieces.size() > 2) {
+            return pieces.get(pieces.size() - 3).getPosition().getY() == 0;
+        }
+        return false;
+    }
 
+    public int getScore() {
+        return this.score;
     }
 
     @Override
     public void run() {
 
-        while (true) {
+        while (!checkEnd()) {
             initializePositionPieceCurrent();
             translateDown(pieces.get(pieces.size() - 2));
             try {
-
-                System.out.println("Sleep");
                 Thread.sleep(500);
             } catch (Exception e) {
 
             }
 
         }
+        gameOver();
+    }
+    private void gameOver() {
+        this.gameOver = true;
+        setChanged();
+        notifyObservers();
+    }
+    public boolean getGameOver() {
+        return this.gameOver;
     }
 }

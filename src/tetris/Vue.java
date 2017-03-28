@@ -115,6 +115,9 @@ public class Vue extends Application {
                 m.initializePositionPieceCurrent();
                 m.rotateLeft(p.get(p.size() - 2));
             }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                Platform.exit();
+            }
 
         });
         // Ajout Observer
@@ -128,58 +131,75 @@ public class Vue extends Application {
                     gridP.getChildren().clear();
                     gridP_colRight.getChildren().clear();
 
-                    gridP_colRight.add(textNext, 0, 0);
+                    if (!m.getGameOver()) {
+                        gridP_colRight.add(textNext, 0, 0);
 
-                    ArrayList<Piece> p = m.getPieces();
+                        ArrayList<Piece> p = m.getPieces();
 
-                    //Sauvegarde de la piece suivante
-                    Piece pieceNext = p.remove(p.size() - 1);
+                        //Sauvegarde de la piece suivante
+                        Piece pieceNext = p.remove(p.size() - 1);
 
-                    // Création de la grille vide 
-                    for (int i = 0; i < GRID_WIDTH; i++) {
-                        for (int j = 0; j < GRID_HEIGHT; j++) {
-                            Rectangle r = new Rectangle();
-                            r.setX(i * CELL_SIZE);
-                            r.setY(j * CELL_SIZE);
-                            r.setWidth(CELL_SIZE);
-                            r.setHeight(CELL_SIZE);
-                            r.setStroke(Color.BLACK);
-                            r.setFill(Color.WHITE);
-                            gridP.add(r, i, j); // Ajout à la gridpane
-                        }
-                    }
-
-                    for (Piece piece : p) {
-                        if (piece.getPosition() != null) {
-                            for (Cellule cell : piece.getShape()) {
-                                Rectangle rect = new Rectangle();
-                                rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
-                                rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
-                                rect.setWidth(CELL_SIZE);
-                                rect.setHeight(CELL_SIZE);
-                                rect.setFill(piece.getColor());
-                                gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                        // Création de la grille vide 
+                        for (int i = 0; i < GRID_WIDTH; i++) {
+                            for (int j = 0; j < GRID_HEIGHT; j++) {
+                                Rectangle r = new Rectangle();
+                                r.setX(i * CELL_SIZE);
+                                r.setY(j * CELL_SIZE);
+                                r.setWidth(CELL_SIZE);
+                                r.setHeight(CELL_SIZE);
+                                r.setStroke(Color.BLACK);
+                                r.setFill(Color.WHITE);
+                                gridP.add(r, i, j); // Ajout à la gridpane
                             }
                         }
-                    }
 
-                    // Affichage de la piece suivante à droite
-                    for (Cellule cellCurrent : pieceNext.getShape()) {
-                        Rectangle rectPieceCurrent = new Rectangle();
-                        rectPieceCurrent.setWidth(CELL_SIZE);
-                        rectPieceCurrent.setHeight(CELL_SIZE);
-                        rectPieceCurrent.setFill(pieceNext.getColor());
-                        rectPieceCurrent.setStroke(Color.BLACK);
-                        gridP_colRight.add(rectPieceCurrent, 1 + cellCurrent.getPosition().getX(), 25 + cellCurrent.getPosition().getY());
+                        for (Piece piece : p) {
+                            if (piece.getPosition() != null) {
+                                for (Cellule cell : piece.getShape()) {
+                                    Rectangle rect = new Rectangle();
+                                    rect.setX(piece.getPosition().getX() + cell.getPosition().getX());
+                                    rect.setY(piece.getPosition().getY() + cell.getPosition().getY());
+                                    rect.setWidth(CELL_SIZE);
+                                    rect.setHeight(CELL_SIZE);
+                                    rect.setFill(piece.getColor());
+                                    gridP.add(rect, piece.getPosition().getX() + cell.getPosition().getX(), piece.getPosition().getY() + cell.getPosition().getY());
+                                }
+                            }
+                        }
+
+                        // Affichage de la piece suivante à droite
+                        for (Cellule cellCurrent : pieceNext.getShape()) {
+                            Rectangle rectPieceCurrent = new Rectangle();
+                            rectPieceCurrent.setWidth(CELL_SIZE);
+                            rectPieceCurrent.setHeight(CELL_SIZE);
+                            rectPieceCurrent.setFill(pieceNext.getColor());
+                            rectPieceCurrent.setStroke(Color.BLACK);
+                            gridP_colRight.add(rectPieceCurrent, 1 + cellCurrent.getPosition().getX(), 25 + cellCurrent.getPosition().getY());
+                        }
+                        p.add(pieceNext);
+
+                        //Affichage score
+                        textScore.setText("Score : " + m.getScore());
+                    } else // Fin de partie !  
+                    {
+                        border.setLeft(null);
+                        border.setRight(null);
+                        textScore.setFont(new Font(40));
+                        border.setCenter(textScore);
+                        textScore.setText("Score : " + m.getScore());
                     }
-                    p.add(pieceNext);
-                });
+                }
+                );
             }
-        });
+        }
+        );
 
-        primaryStage.setTitle("Tetris");
-        primaryStage.setScene(new Scene(border));
+        primaryStage.setTitle(
+                "Tetris");
+        primaryStage.setScene(
+                new Scene(border));
         primaryStage.show();
+
         border.requestFocus();
 
     }
